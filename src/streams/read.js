@@ -15,7 +15,7 @@ const read = async () => {
 	console.log();
 };
 
-read().catch(err => {
+await read().catch(err => {
     console.error(`Error message: ${err.message}`);
     process.exit(1);
 });
