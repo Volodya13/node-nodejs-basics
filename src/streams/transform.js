@@ -1,5 +1,24 @@
+import {Transform} from 'stream';
+import {pipeline} from 'stream/promises';
+
 const transform = async () => {
-  // Write your code here
+  const transformStream = new Transform({
+    transform(chunk, encoding, callback) {
+      callback(null, chunk.toString()
+        .split('')
+        .reverse()
+        .join(''));
+        }
+    });
+
+    await pipeline(
+      process.stdin,
+      transformStream,
+      process.stdout,
+    )
 };
 
-await transform();
+await transform().catch(err => {
+    console.error(`Error message: ${err.message}`);
+    process.exit(1);
+});
